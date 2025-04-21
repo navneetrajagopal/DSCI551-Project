@@ -35,7 +35,6 @@ os.environ['OPENAI_API_KEY'] = 'sk-proj-P0m-Ctvb8m-JV5eEK90FINgUjonu-y1B2Ga9d3_v
 
 db = SQLDatabase.from_uri("mysql+pymysql://admin:Dsci-551@database-1.cjc8aikg8tmh.us-east-2.rds.amazonaws.com/DSCI551")
 llm = OpenAI(temperature=0)
-sql_chain = SQLDatabaseChain.from_llm(llm=llm, db=db, verbose=True)
 
 """#Create LLM AND DB Agent"""
 
