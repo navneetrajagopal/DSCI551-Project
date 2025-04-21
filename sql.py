@@ -93,10 +93,7 @@ Do NOT guess or invent table or column names. Use only what's listed.
 - SalePrice exists in SALE_TRANSACTIONS, not in PROPERTY_INFO
 - If the prompt includes "most expensive house," use ORDER BY TotalValue DESC from OWNER_DETAIL.
 - Do not reference PROPERTY_INFO.TotalValue — it does not exist.
-- When querying INFORMATION_SCHEMA (e.g., to find columns or tables), always use UPPER() on both sides of comparisons.
-- Example:
-  SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE UPPER(TABLE_NAME) = 'PROPERTY_INFO' AND UPPER(DATA_TYPE) = 'INT';
+- When querying INFORMATION_SCHEMA (e.g., to find columns or tables), always use UPPER() on both sides of comparisons. (Ex: SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE UPPER(TABLE_NAME) = 'PROPERTY_INFO' AND UPPER(DATA_TYPE) = 'INT';)
 
 
 
@@ -119,8 +116,6 @@ sql_translator = LLMChain(
 """#translate query to natural language"""
 
 def translate(natural_language: str) -> str:
-    natural_language_clean = natural_language.lower().strip()
-    db_name = db._engine.url.database
     return sql_translator.run(instruction=natural_language).strip()
 
 """#Query
