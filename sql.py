@@ -129,7 +129,7 @@ def run_query(sql: str, user_prompt: str):
         with db._engine.begin() as conn:
             query_result = conn.execute(text(sql))
 
-            #returns in MySQL format
+            #returns non tabilar in MySQL format
             if query_result.returns_rows:
                 rows = query_result.fetchall()
                 columns = query_result.keys()
@@ -139,7 +139,7 @@ def run_query(sql: str, user_prompt: str):
                     "columns": columns,
                     "sql": sql
                 }
-            #table in MySQL format
+            #tabular data in MySQL format
             else:
                 return {
                     "status": "success",
@@ -148,8 +148,10 @@ def run_query(sql: str, user_prompt: str):
                     "sql": sql
                 }
 
+    #error 
     except Exception as e:
-        return f"STOP: SQL error – {str(e)}"
+        return f"STOP: SQL error: {str(e)}"
+
 
 
 """#output format"""
