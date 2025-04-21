@@ -19,7 +19,6 @@ def main():
         elif choice == "2":
             # Call the MongoDB query function
             chat_with_music()
-            print('exit')
         elif choice == "3":
             print("Exiting...")
             break
