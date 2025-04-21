@@ -9,7 +9,7 @@ Original file is located at
 #Install
 """
 
-!pip3 install langchain openai pymysql sqlalchemy langchain_community langchain_experimental langgraph
+# !pip3 install langchain openai pymysql sqlalchemy langchain_community langchain_experimental langgraph
 
 """#setup"""
 
