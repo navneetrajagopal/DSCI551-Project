@@ -114,9 +114,7 @@ sql_translator = LLMChain(
 def translate(natural_language: str) -> str:
     return sql_translator.run(instruction=natural_language).strip()
 
-"""#Query
-
-"""
+"""#Query"""
 
 def run_query(sql: str, user_prompt: str):
 # Capitalize all values
@@ -200,4 +198,4 @@ def housing_queries():
             result = run_query(sql_query, user_prompt)
             output_format(result)
         except Exception as e:
-            print(f"\n error: {e}\n")
+            print(f"\n  error: {e}\n")
