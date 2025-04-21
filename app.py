@@ -2,7 +2,6 @@ from mongo import chat_with_music
 from sql import housing_queries
 
 def main():
-    # Display the welcome message
     print("Welcome to the Database Query Interface!")
     print("You can query either the Housing Database (MySQL) or the Spotify Database (MongoDB).")
     while True:        

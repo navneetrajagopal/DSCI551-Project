@@ -13,7 +13,9 @@ from langchain_core.tools import tool
 import json
 import os
 from dotenv import load_dotenv
+import warnings
 
+warnings.filterwarnings("ignore")
 load_dotenv()
 uri = os.getenv("MONGODB_URI")
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -56,8 +58,8 @@ WHAT YOU CAN DO:
    - Use only `aggregate()` for queries.
    - Include stages like `$match`, `$group`, `$lookup`, `$project`, `$sort`, `$limit`, etc.
    - Do not use `find()`. Always use `aggregate()`.
-   - for matching, USE REGEX as so: {"Release Date": {"$regex": "^2016"}}))
-
+   - for release date matching, USE REGEX as so: {"Release Date": {"$regex": "^<year>"}}))
+   - if a song NAME is given, ALSO USE REGEX for matching, as above, ^<song_name> or any other field like genre, artist, etc.
 2. Data modification
    - For adding new documents, use the `mongo_insert` tool. Input must have:
      - `"collection"`: the target collection.
@@ -224,7 +226,7 @@ spotify_agent = initialize_agent(
     all_tools,
     llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True,
+    verbose=False,
     handle_parsing_errors=True
     )
 
