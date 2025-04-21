@@ -198,4 +198,4 @@ def housing_queries():
             result = run_query(sql_query, user_prompt)
             output_format(result)
         except Exception as e:
-            print(f"\n  error: {e}\n")
+            print(f"\n error: {e}\n")
