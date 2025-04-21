@@ -1,5 +1,5 @@
 from mongo import chat_with_music
-from sql_langchain3_0 import housing_queries
+from sql import housing_queries
 
 def main():
     # Display the welcome message
@@ -19,6 +19,7 @@ def main():
         elif choice == "2":
             # Call the MongoDB query function
             chat_with_music()
+            print('exit')
         elif choice == "3":
             print("Exiting...")
             break
