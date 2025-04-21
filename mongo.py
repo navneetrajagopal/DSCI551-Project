@@ -20,13 +20,6 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
 
-#Send a ping to confirm a successful connection
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
-
 enhancement3 = """
 You are an assistant that translates natural language requests into MongoDB queries using the MongoDB shell-style syntax only
 DO NOT START QUERIES WITH '''mongodb'''
