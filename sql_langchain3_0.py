@@ -29,12 +29,13 @@ from langgraph.graph import StateGraph, END
 
 """#OpenAI Key"""
 
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = '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'
 
 """#Connect to DB"""
 
 db = SQLDatabase.from_uri("mysql+pymysql://admin:Dsci-551@database-1.cjc8aikg8tmh.us-east-2.rds.amazonaws.com/DSCI551")
 llm = OpenAI(temperature=0)
+sql_chain = SQLDatabaseChain.from_llm(llm=llm, db=db, verbose=True)
 
 """#Create LLM AND DB Agent"""
 
@@ -83,13 +84,17 @@ Do NOT guess or invent table or column names. Use only what's listed.
 - run SHOW COLUMNS from table_name when asked about the columns and names (ex: what are the column names in the tables, what  are all the col names, col names, column names, what are all the columns in table, what are the columnsin table, what columns exit in table, show existing columns in table, show me the columns in table, show me all the columns in table, list the columns in table, list all the columns in table)
 - ex: run show columns from property_info when asked about columns in property info
 - Do not reference or use the column Acreage in any part of the SQL query, including filters, joins, selects, or conditions unless explictely mentioned
-- Do not assume values of columns when they are not sepcifically mentioned, do not add additional filters if not mentioned (ex: if asked about owners do not query landuse, or property acerage)
+- do not have a single line about property acerage unless specifically mentioned! (that means no property acerage is null no property acerage is not null nothing of property acerage should exist unless it is mentioned explicitly)
 - when asking most or least you should limit to one
 - Insert into OWNER_DETAILS when the user specifies an owner or OwnerName.
 - The OWNER_DETAILS table has: UniqueID (primary key), OwnerName, ParcelID, etc.
 - Do NOT insert into PROPERTY_INFO unless the instruction is about property details like acreage, bedrooms, or address.
 - Insert into SALE_TRANSACTIONS when the user specifies a sale or transaction
-- The SALE_TRANSACTION Table has UniqueID as primary kley
+- The SALE_TRANSACTION Table has UniqueID as primary key
+- "Most expensive house" means the highest TotalValue, "cheapest house" means lowest total value from OWNER_DETAIL or highest/lowest SalePrice from SALE_TRANSACTIONS.
+- Do NOT use Acreage to determine value unless explicitly asked. Acerage only refers to size of lot and should not be at all used unless size is mentioned
+- Use ORDER BY TotalValue DESC or SalePrice DESC depending on what "expensive" means.
+- TotalValue is in the OwNER_DETAIL table, and SalePrice is in the SALE_TRANSACTIONS table you will do joins to find this
 
 
 
