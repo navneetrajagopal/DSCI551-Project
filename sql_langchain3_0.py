@@ -205,15 +205,20 @@ def output_format(state_output: dict):
 
 """#user input"""
 
-def get_user_prompt():
-    return input("Enter your query: ")
-user_prompt = get_user_prompt()
+def housing_queries():
+    print("\nWelcome to the Housing Database (MySQL) Query Interface.")
+    print("Type 'exit' to return to the main menu.")
+    while True:
+        user_prompt = input("Enter your query: ").strip()
+        if user_prompt.lower() == "exit":
+            break
 
-sql_query = translate(user_prompt)
+        sql_query = translate(user_prompt)
 
-state_output = compiled.invoke({
-    "user_prompt": user_prompt,
-    "sql": sql_query
-})
+        state_output = compiled.invoke({
+            "user_prompt": user_prompt,
+            "sql": sql_query
+        })
 
-output_format(state_output)
+        output_format(state_output)
+
