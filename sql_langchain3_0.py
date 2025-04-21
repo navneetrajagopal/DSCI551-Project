@@ -13,19 +13,18 @@ Original file is located at
 
 """#setup"""
 
-#note for self clean up this has all of imports used
+
 import os
 import re
 import pandas as pd
+from sqlalchemy import inspect, text
+from typing import TypedDict
 from langchain import OpenAI, SQLDatabase
 from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
-from sqlalchemy import inspect
-from langgraph.graph import StateGraph, END
 from langchain_experimental.sql import SQLDatabaseChain
-from sqlalchemy import text
-from typing import TypedDict
 from langgraph.graph import StateGraph, END
+
 
 """#OpenAI Key"""
 
