@@ -92,10 +92,6 @@ property_info = df[[
     'YearBuilt', 'Bedrooms', 'FullBath', 'HalfBath'
 ]]
 
-#property_info = df.drop_duplicates(subset='UniqueID')[[
- #   'UniqueID', 'ParcelID', 'LandUse', 'PropertyAddress', 'Acreage', 'TaxDistrict',
-#    'YearBuilt', 'Bedrooms', 'FullBath', 'HalfBath'
-#]]
 property_tuples = list(property_info.itertuples(index=False, name=None))
 cursor.executemany("""
     INSERT INTO PROPERTY_INFO (UniqueID, ParcelID, LandUse, PropertyAddress, Acreage, TaxDistrict,
