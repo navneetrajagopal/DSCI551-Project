@@ -1,4 +1,8 @@
+from mongo import chat_with_music
 def main():
+    # Display the welcome message
+    print("Welcome to the Database Query Interface!")
+    print("You can query either the Housing Database (MySQL) or the Spotify Database (MongoDB).")
     while True:
         print("\n--- Select a database to query ---")
         print("1. Housing Database (MySQL)")
@@ -12,13 +16,14 @@ def main():
             print("stub")
         elif choice == "2":
             # Call the MongoDB query function
-            print("stub")
+            chat_with_music()
         elif choice == "3":
             print("Exiting...")
             break
         else:
             print("Invalid choice. Please try again.")
 
+    print("Thank you for using the Database Query Interface!")
 
 if __name__ == "__main__":
     main()

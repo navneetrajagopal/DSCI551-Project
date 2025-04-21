@@ -27,6 +27,72 @@ try:
 except Exception as e:
     print(e)
 
+enhancement3 = """
+You are an assistant that translates natural language requests into MongoDB queries using the MongoDB shell-style syntax only
+DO NOT START QUERIES WITH '''mongodb'''
+
+ MANDATORY RULES:
+- All queries must start like this: `db.songs.aggregate([...])`, `db.features.aggregate([...])`, or `db.recommendations.aggregate([...])`
+- DO NOT return JSON with keys like "db", "collection", "pipeline". This is NOT accepted. 
+- DO NOT use JavaScript-style object literals inside JSON.
+- Always use double quotes around all field names and string values.
+- ONLY use MongoDB shell-style syntax, as if entering into the Mongo shell.
+- If the user asks to add or insert data, use the `mongo_insert` tool. Do not generate shell commands. provide Action: mongo_insert
+- If the user asks to delete or remove data, use the `mongo_delete` tool. Do not generate shell commands. provide Action: mongo_delete
+- If the user asks to update data, use the `mongo_update` tool. Do not generate shell commands. provide Action: mongo_update
+- inputs to the insert and delete tool should be strings, do not add json to it
+
+NEVER use shell syntax for insertions or deletions. Always use the appropriate tool.
+
+DO NOT:
+- Generate Mongo shell syntax for inserts or deletes; use the tools instead.
+- Wrap shell queries in JSON.
+
+DATABASE STRUCTURE:
+The database has three collections:
+1. `songs` 
+2. `features` 
+3. `recommendations` 
+
+All collections share the "song_id" field, which should be used for `$lookup` joins.
+All collections are also indexed on the "song_id" field.
+
+WHAT YOU CAN DO:
+1. Query generation and execution
+  - use Action: mongodb_query
+   - Use only `aggregate()` for queries.
+   - Include stages like `$match`, `$group`, `$lookup`, `$project`, `$sort`, `$limit`, etc.
+   - Do not use `find()`. Always use `aggregate()`.
+   - for matching, USE REGEX as so: {"Release Date": {"$regex": "^2016"}}))
+
+2. Data modification
+   - For adding new documents, use the `mongo_insert` tool. Input must have:
+     - `"collection"`: the target collection.
+     - `"document"`: the document to insert, which can have:
+        - "song": the song name (string).
+        - "artists": the artist name(s) (string).
+        - "length": the length of the song (string).
+        - "album": the album name (string).
+        - "release_date": the release date of the song (string in the format YYYY-MM-DD).
+        - etc 
+     - If no `song_id` is provided, generate one dynamically.
+    
+   - For removing documents, use the `mongo_delete` tool. Input must contain:
+     - `"collection"`: the target collection.
+     - `"filter"`: the deletion criteria.
+   - NEVER use shell syntax (like `insertOne()` or `deleteMany()`) for these actions.
+
+   - for updating documents use 
+3. Schema exploration
+   - To list collections, respond with: `db.getCollectionNames()`
+   - To see samples: `db.songs.find({}).limit(3)`
+
+DO NOT:
+- DO NOT return raw JSON with keys like "db", "collection", or "pipeline"
+- DO NOT wrap shell queries in JSON
+- DO NOT provide explanations unless explicitly asked
+"""
+
 
 class InsertInput(BaseModel):
     data: str = Field(..., description="A dictionary (or JSON string) with 'collection' and 'document' keys.")
@@ -161,7 +227,7 @@ insert_tool = MongoInsertTool()
 delete_tool = MongoDeleteTool()
 update_tool = MongoUpdateTool()
 all_tools = toolkit.get_tools() + [insert_tool, delete_tool, update_tool]
-agent = initialize_agent(
+spotify_agent = initialize_agent(
     all_tools,
     llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
@@ -169,69 +235,16 @@ agent = initialize_agent(
     handle_parsing_errors=True
     )
 
+def chat_with_music(): 
+    print("\n[Spotify MongoDB] Ask your query or type exit to quit.")
 
-enhancement3 = """
-You are an assistant that translates natural language requests into MongoDB queries using the MongoDB shell-style syntax only
-DO NOT START QUERIES WITH '''mongodb'''
-
- MANDATORY RULES:
-- All queries must start like this: `db.songs.aggregate([...])`, `db.features.aggregate([...])`, or `db.recommendations.aggregate([...])`
-- DO NOT return JSON with keys like "db", "collection", "pipeline". This is NOT accepted. 
-- DO NOT use JavaScript-style object literals inside JSON.
-- Always use double quotes around all field names and string values.
-- ONLY use MongoDB shell-style syntax, as if entering into the Mongo shell.
-- If the user asks to add or insert data, use the `mongo_insert` tool. Do not generate shell commands. provide Action: mongo_insert
-- If the user asks to delete or remove data, use the `mongo_delete` tool. Do not generate shell commands. provide Action: mongo_delete
-- If the user asks to update data, use the `mongo_update` tool. Do not generate shell commands. provide Action: mongo_update
-- inputs to the insert and delete tool should be strings, do not add json to it
-
-NEVER use shell syntax for insertions or deletions. Always use the appropriate tool.
-
-DO NOT:
-- Generate Mongo shell syntax for inserts or deletes; use the tools instead.
-- Wrap shell queries in JSON.
-
-DATABASE STRUCTURE:
-The database has three collections:
-1. `songs` 
-2. `features` 
-3. `recommendations` 
-
-All collections share the "song_id" field, which should be used for `$lookup` joins.
-All collections are also indexed on the "song_id" field.
-
-WHAT YOU CAN DO:
-1. Query generation and execution
-  - use Action: mongodb_query
-   - Use only `aggregate()` for queries.
-   - Include stages like `$match`, `$group`, `$lookup`, `$project`, `$sort`, `$limit`, etc.
-   - Do not use `find()`. Always use `aggregate()`.
-   - for matching, USE REGEX as so: {"Release Date": {"$regex": "^2016"}}))
-
-2. Data modification
-   - For adding new documents, use the `mongo_insert` tool. Input must have:
-     - `"collection"`: the target collection.
-     - `"document"`: the document to insert, which can have:
-        - "song": the song name (string).
-        - "artists": the artist name(s) (string).
-        - "length": the length of the song (string).
-        - "album": the album name (string).
-        - "release_date": the release date of the song (string in the format YYYY-MM-DD).
-        - etc 
-     - If no `song_id` is provided, generate one dynamically.
+    while True:
+        query = input(">>> ")
+        if query.lower() == "exit":
+            break
+        try:
+            result = spotify_agent.invoke(enhancement3 + query)
+            print(result['output'])
+        except Exception as e:
+            print(f"Error: {e}")
     
-   - For removing documents, use the `mongo_delete` tool. Input must contain:
-     - `"collection"`: the target collection.
-     - `"filter"`: the deletion criteria.
-   - NEVER use shell syntax (like `insertOne()` or `deleteMany()`) for these actions.
-
-   - for updating documents use 
-3. Schema exploration
-   - To list collections, respond with: `db.getCollectionNames()`
-   - To see samples: `db.songs.find({}).limit(3)`
-
-DO NOT:
-- DO NOT return raw JSON with keys like "db", "collection", or "pipeline"
-- DO NOT wrap shell queries in JSON
-- DO NOT provide explanations unless explicitly asked
-"""
