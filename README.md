@@ -4,7 +4,7 @@ This project is a natural language to SQL and MongoDB query translator utilizing
 
 ## How to use the SQL file  
 - First you need to connect a database (we utilized amazon rds but it will be shut down due to incurring costs)
-- next you need to use the translator app to import the housing.csv file into the database
+- next you need to use the csv2rds.py to import the housing.csv file into the database
 - the you will have to edit the SQL.py 
 - insert the url for the AWS RDS server
 - add your API key into the API key folder
