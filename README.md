@@ -14,7 +14,7 @@ This project is a natural language to SQL and MongoDB query translator utilizing
 ## How to use the Mongo File
 - You will need to first add your API key for an LLM into a .env file 
 - Along with this key you should also include the database url for the mongodb database
-    - This is all setup for our Spotify implementation but it will also be shut down due to incurring costs of dataset size
+    - This is all setup for our mongoDB setup but it will also be shut down like our rds
 - Change the LLM type if needed to suit your API key
 - exit
 - if you would like to accommodate *any* DB, you will need to edit the prompt enhancement, as well as the database name in the custom tools 

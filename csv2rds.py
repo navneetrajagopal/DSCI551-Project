@@ -7,9 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1QK2Q1513zp7aqC9hhsc__3dQquCyOED9
 """
 
-!pip install pandas
-!pip install pymysql
-!pip install numpy
+# !pip install pandas
+# !pip install pymysql
+# !pip install numpy
 
 import pandas as pd
 import pymysql
