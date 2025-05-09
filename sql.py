@@ -21,6 +21,9 @@ from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from sqlalchemy import create_engine, inspect, text
 from langchain import SQLDatabase
+import warnings 
+warnings.filterwarnings("ignore")
+
 
 """#OpenAI Key"""
 
