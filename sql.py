@@ -131,7 +131,7 @@ def run_query(sql: str):
         with db._engine.begin() as conn:
             query_result = conn.execute(text(sql))
 
-            #returns tabilar in MySQL format
+            #returns tabilar in MySQL format 
             if query_result.returns_rows:
                 rows = query_result.fetchall()
                 columns = query_result.keys()
@@ -173,7 +173,7 @@ def output_format(result):
         data = result["data"]
         columns = result.get("columns", [])
 
-        #for tabular responses
+        #for tabular responses - uses pandas dataframe
         if columns and isinstance(data, list):
             df = pd.DataFrame(data, columns=columns)
             print("\n Table:")
