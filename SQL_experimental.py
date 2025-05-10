@@ -183,6 +183,23 @@ def query_housing_database(question: str):
     except Exception as e:
         print(f"\n Error: {e}")
         return None
+### add to the app.py
+def experimental_queries():
+    print("Welcome to the Experimental Housing Query CLI. This has not been fully tested compared to the other model. Type 'exit' to return to the main menu.\n")
 
-# === Example Call ===
-query_housing_database("who has the most expensive house?")
+    while True:
+        user_prompt = input("Enter your query: ").strip()
+        if user_prompt.lower() == "exit":
+            print("Exiting housing query interface.\n")
+            break
+
+        try:
+            result = query_housing_database(user_prompt)
+            if result:
+                print("\nQuery Result:\n", result)
+        except Exception as e:
+            print(f"\nError: {e}\n")
+
+# To run interactively
+if __name__ == "__main__":
+    experimental_queries()
