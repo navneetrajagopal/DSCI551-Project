@@ -183,6 +183,7 @@ def output_format(result):
         else:
             print("\nSuccess:")
             print(data)
+    #error outside of the query (permissions probably)
     else:
         print("\nError:")
         print(result.get("Unknown error"))
