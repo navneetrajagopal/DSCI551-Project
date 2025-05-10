@@ -26,11 +26,11 @@ warnings.simplefilter("ignore")
 
 """#OpenAI Key"""
 
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = 'PUT YOUR API KEY HERE'
 
 """#Connect to DB"""
 
-db = SQLDatabase.from_uri("mysql+pymysql://admin:Dsci-551@database-1.cjc8aikg8tmh.us-east-2.rds.amazonaws.com/DSCI551")
+db = SQLDatabase.from_uri("PUT YOUR URL HERE")
 llm = OpenAI(temperature=0)
 
 
@@ -119,7 +119,7 @@ def translate(natural_language: str) -> str:
 """#Query"""
 
 def run_query(sql: str):
-# Capitalize all values
+# Capitalize all values (because everything is caps, sometimes the LLM doesn't do it)
     sql = re.sub(
       r"'([^']*)'",
       lambda m: f"'{m.group(1).upper()}'",

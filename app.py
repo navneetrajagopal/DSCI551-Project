@@ -2,7 +2,7 @@ import warnings
 warnings.simplefilter("ignore")
 
 
-#from mongo import chat_with_music
+from mongo import chat_with_music
 from sql import housing_queries
 
 
@@ -21,8 +21,7 @@ def main():
         if choice == "1":
             housing_queries()
         elif choice == "2":
-            #chat_with_music()
-            break
+            chat_with_music()
         elif choice == "3":
             print("Exiting...")
             break

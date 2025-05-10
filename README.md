@@ -9,16 +9,16 @@ The mongo.py script defines a natural language interface to a MongoDB database u
 
 
 ## How to use the SQL file  
-- First you need to connect a database (we utilized amazon rds but it will be shut down due to incurring costs)
+- First you need to connect a database (we utilized amazon rds but it will be shut down due to incurring costs) 
 - next you need to use the csv2rds.py to import the housing.csv file into the database
 - the you will have to edit the SQL.py 
-- insert the url for the AWS RDS server
-- add your API key into the API key folder
+- insert the url for the AWS RDS server. This is in line 33, you will see in all caps insert your URL here
+- add your API key into the API key folder. This is in line 29, you will see in all caps for your API key
 - Then exit
 
 
 ## How to use the Mongo File
-- You will need to first add your API key for an LLM into a .env file 
+- You will need to first add your API key for an LLM into a .env file
 - Along with this key you should also include the database url for the mongodb database
     - This is all setup for our mongoDB setup but it will also be shut down like our rds
 - Change the LLM type if needed to suit your API key
