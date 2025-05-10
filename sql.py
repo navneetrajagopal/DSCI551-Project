@@ -12,6 +12,8 @@ Original file is located at
 #!pip install langchain openai pymysql sqlalchemy
 
 """#setup"""
+import warnings 
+warnings.filterwarnings("ignore")
 
 import os
 import re
@@ -21,8 +23,7 @@ from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from sqlalchemy import create_engine, inspect, text
 from langchain import SQLDatabase
-import warnings 
-warnings.filterwarnings("ignore")
+
 
 
 """#OpenAI Key"""
@@ -119,7 +120,7 @@ def translate(natural_language: str) -> str:
 
 """#Query"""
 
-def run_query(sql: str, user_prompt: str):
+def run_query(sql: str):
 # Capitalize all values
     sql = re.sub(
       r"'([^']*)'",
@@ -200,7 +201,7 @@ def housing_queries():
 
         try:
             sql_query = translate(user_prompt)
-            result = run_query(sql_query, user_prompt)
+            result = run_query(sql_query)
             output_format(result)
         except Exception as e:
             print(f"\n error: {e}\n")
