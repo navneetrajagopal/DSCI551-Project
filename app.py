@@ -23,7 +23,6 @@ def main():
             housing_queries()
         elif choice == "2":
             chat_with_music()
-            break
         elif choice == "3":
             experimental_queries()
         elif choice == "4":
