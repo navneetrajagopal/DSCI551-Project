@@ -1,6 +1,10 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 from mongo import chat_with_music
 from sql import housing_queries
 from SQL_experimental import experimental_queries
+
 
 def main():
     print("Welcome to the Database Query Interface!")
@@ -19,6 +23,7 @@ def main():
             housing_queries()
         elif choice == "2":
             chat_with_music()
+            break
         elif choice == "3":
             experimental_queries()
         elif choice == "4":
