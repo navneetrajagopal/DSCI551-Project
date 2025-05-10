@@ -12,8 +12,6 @@ Original file is located at
 #!pip install langchain openai pymysql sqlalchemy
 
 """#setup"""
-import warnings 
-warnings.filterwarnings("ignore")
 
 import os
 import re
@@ -23,8 +21,8 @@ from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from sqlalchemy import create_engine, inspect, text
 from langchain import SQLDatabase
-
-
+import warnings
+warnings.simplefilter("ignore")
 
 """#OpenAI Key"""
 
